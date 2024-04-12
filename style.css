@@ -1,0 +1,128 @@
+@font-face {
+	font-family: 'Bahnschrift';
+	src: url('bahnschrift.ttf');
+	size-adjust: 110%;
+}
+
+
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notosanssc/v36/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG-3FnYw.ttf) format('truetype');
+}
+
+
+
+body {
+  background-color: black;
+  color: white;
+  text-align: center;
+  margin-top: 0;
+  font-size: 18px;
+}
+
+* {
+  font-family: Bahnschrift, Noto Sans SC, sans-serif;
+}
+  
+.countdown {
+  z-index: 3;
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+	transform: translate(-50%, 0);
+	width: 400px;
+	min-height: 10px;
+	color: white;
+	border: solid 2px #222;
+	background-color: #171717;
+	padding: 7px 25px;
+	transition-duration: 1.5s; 
+}  
+.milestones {
+  z-index: 2;
+  position: fixed;
+  left: 50%;
+  bottom: 85px;
+	transform: translate(-50%, 0);
+	width: 400px;
+	min-height: 10px;
+	color: white;
+	border: solid 2px #222;
+	background-color: #171717;
+	padding: 7px 25px;
+	transition-duration: 1.5s; 
+  font-size: 16px;
+}  
+
+.countdown.hide {
+	bottom: -130px;
+}
+.milestones.hide {
+	border-color: #111;
+  background: #111111;
+  color: #777;
+}
+#popups {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	pointer-events: none;
+}
+
+.popup {
+	z-index: 4;
+	position: absolute;
+	left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+	color: white;
+	border: solid 2px #222;
+	background-color: #171717;
+	padding: 7px 25px;
+	pointer-events: auto;
+	max-width: 75%; max-height: 75%;
+	overflow: auto;
+	font-size: 16px;
+}
+
+.popup > input {
+	width: 300px;
+	margin-bottom: 10px;
+}
+
+.pos_center {
+	position: absolute;
+	left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.open_popup {  
+  position: fixed;  
+  bottom: 160px;  
+  left: 50%; /* 将左边缘置于窗口中心 */  
+  transform: translateX(-50%); /* 向左移动自身宽度的50%，实现居中 */  
+  cursor: pointer;  
+  font-size: 12px;  
+  max-width: 250px;  
+  padding: 7px 25px;  
+  text-decoration: none;  
+  border: 1px solid #777;  
+  background: #333;  
+  color: white;  
+}
+.btn {
+  cursor: pointer;
+  font-size: 12px;
+  max-width: 250px;
+  padding: 7px 25px;
+  text-decoration: none;
+  border: 1px solid #777;
+  background: #333;
+  font-family: 'Courier New', sans-serif;
+  color: white;
+  display: inline-block;
+}
