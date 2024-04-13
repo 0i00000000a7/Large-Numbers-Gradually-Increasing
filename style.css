@@ -21,6 +21,7 @@ body {
   text-align: center;
   margin-top: 0;
   font-size: 18px;
+  overflow: auto;
 }
 
 * {
