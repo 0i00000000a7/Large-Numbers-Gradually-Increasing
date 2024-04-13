@@ -3,7 +3,25 @@ test = 0
 endScreenShowed = false
 isShowingMilestone = false
 milestones = [0, 8525, 13166, 16627, 22450, 33938, 52391, 80131, 89348, 130069, 133649, 185817, 229228, 233834, 288198, 1033200, 1857554, 2.2631e6, 3199950]
-milestoneDisplays = ['0', '10,000,000,000', '10<sup>100</sup>', '10<sup>1,000,000</sup>', '10<sup>10<sup>100</sup></sup>', '10<sup>10<sup>10<sup>10,000,000,000</sup></sup></sup>', '10^^10', '10^^10^^10^^10', '10^^^1,000,000', '10^^^^5', '10{10}10', '10{1,000,000}10', '10{10{10{10{10}10}10}10}10', '10{{1}}1,000', '10{{2}}5', '10{{3}}6', '10{{1,000,000}}10', '10{{{10}}}10', '{10,10,10,1.000e6}']
+milestoneDisplays = ['0',
+'10,000,000,000',
+'10<sup>100</sup>',
+'10<sup>1,000,000</sup>',
+'10<sup>10<sup>100</sup></sup>',
+'10<sup>10<sup>10<sup>10,000,000,000</sup></sup></sup>',
+`10${cA(3,'^^')}10`,
+`10${cA(3,'^^')}10${cA(3,'^^')}10${cA(3,'^^')}10`,
+`10${cA(3,'^^^')}1,000,000`, `10${cA(3,'^^^^')}5`,
+`10${cA(4,'{')}${cA(3,'10')}${cA(4,'}')}10`,
+`10${cA(4,'{')}${cA(3,'1,000,000')}${cA(4,'}')}10`,
+`10${cA(4,'{')}10${cA(4,'{')}10${cA(4,'{')}10${cA(4,'{')}${cA(3,'10')}${cA(4,'}')}10${cA(4,'}')}10${cA(4,'}')}10${cA(4,'}')}`,
+`10${cA(4,'{{')}${cA(3,1)}${cA(4,'}}')}1,000`,
+`10${cA(4,'{{')}${cA(3,2)}${cA(4,'}}')}5`,
+`10${cA(4,'{{')}${cA(3,3)}${cA(4,'}}')}6`,
+`10${cA(4,'{{')}${cA(3,1000000)}${cA(4,'}}')}10`,
+`10${cA(4,'{{{')}${cA(3,'1,000,000')}${cA(4,'}}}')}10`,
+`{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,'1,000,000')}}`
+]
 
 Infinity_symbol = '<div class="rotate-90">8</div>'
 totalTime = 3199950
@@ -54,57 +72,58 @@ function timeToNumber(x) {
   }
   //10^^9 < x < 10^^100
   else if(x < 55512) {
-    return '10^^' + (1.002 ** (x - 52055) + 0.00008 * x + 3.85).toFixed(2)
+    return `10${cA(3,'^^')}` + (1.002 ** (x - 52055) + 0.00008 * x + 3.85).toFixed(2)
   }
   //10^100 < x < 10^^10^^10^^10
   else if(x < 80131) {
-    return "10^^" + timeToNumber((x - 53690) ** 1.1)
+    return `10${cA(3,'^^')}` + timeToNumber((x - 53690) ** 1.1)
   }
   //10^^^4 < x < 10^^^1e6
   else if(x < 89348) {
-    return "10^^^" + Number((1.0015 ** (x - 80131) + 0.00008 * x - 3.41).toFixed(2)).toLocaleString()
+    return `10${cA(3,'^^^')}` + Number((1.0015 ** (x - 80131) + 0.00008 * x - 3.41).toFixed(2)).toLocaleString()
     //10^^^1e6 < x
   } else if(x < 130069) {
-    return "10^^^" + timeToNumber((x - 86550) ** 1.1)
+    return `10${cA(3,'^^^')}` + timeToNumber((x - 86550) ** 1.1)
   } else if(x < 132569) {
-    return "10^^^^" + Number((((x - 130069) / 500) + 5).toFixed(2)).toLocaleString()
+    return `10${cA(3,'^^^^')}` + Number((((x - 130069) / 500) + 5).toFixed(2)).toLocaleString()
   } else if(x < 185817) {
     a = ((1.01 ** ((x - 116394) / 100)) ** 2) - 20
     c = Math.floor(a)
     b = (10 ** ((a - c) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
-    if(c < 10) return 10 + '^'.repeat(c) + b
-    return `10{${c.toLocaleString()}}${b}`
+    if(c < 10) return 10 + cA(3,'^'.repeat(c)) + b
+    return `10${cA(4,'{')}${cA(3,c.toLocaleString())}${cA(4,'}')}${b}`
   } else if(x < 229228) {
-    return '10{' + timeToNumber((x - 183836) ** 1.15) + '}10'
+    return `10${cA(4,'{')}` + timeToNumber((x - 183836) ** 1.15) + `${cA(4,'}')}10`
   } else if(x < 233834) {
-    return "10{{1}}" + Number((1.0015 ** (x - 229228) + 0.00008 * x - 14.34).toFixed(2)).toLocaleString()
+    return `10${cA(4,'{{')}${cA(3,'1')}${cA(4,'}}')}` + Number((1.0015 ** (x - 229228) + 0.00008 * x - 14.34).toFixed(2)).toLocaleString()
   } else if(x < 288198) {
-    return '10{{1}}' + timeToNumber((x - 232515) ** 1.15)
+    return `10${cA(4,'{{')}${cA(3,'1')}${cA(4,'}}')}` + timeToNumber((x - 232515) ** 1.15)
   } else if(x < 1033200) {
-    return '10{{2}}' + timeToNumber((x - 287800) * 1.2)
+    return `10${cA(4,'{{')}${cA(3,'2')}${cA(4,'}}')}` + timeToNumber((x - 287800) * 1.2)
   } else if(x < 1233000) {
-    return '10{{3}}' + Number((((x - 1033200) / 50000) + 6).toFixed(2)).toLocaleString()
+    return `10${cA(4,'{{')}${cA(3,'3')}${cA(4,'}}')}` + Number((((x - 1033200) / 50000) + 6).toFixed(2)).toLocaleString()
   } else if(x < 1857554) {
     a = ((1.01 ** ((x - 1163330) / 1000)) ** 2)
     c = Math.floor(a)
     b = (10 ** ((a - c) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
-    return `10{{${c.toLocaleString()}}}${b}`
+    return `10${cA(4,'{{')}${cA(3,c.toLocaleString())}${cA(4,'}}')}${b}`
   } else if (x < 2178480) {
-    return `10{{${timeToNumber((x - 1855573) ** 1.15)}}}10`
+    return `10${cA(4,'{{')}${timeToNumber((x - 1855573) ** 1.15)}${cA(4,'}}')}10`
   } else if (x < 2.2631e6) {
     a = ((1.01 ** ((x - 2178480) / 750)) ** 2) + Math.log(12.5) / Math.log(5)
     c = Math.floor(a)
     b = (10 ** ((a - c) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
-    return `10{{{${c.toLocaleString()}}}}${b}`
+    return `10${cA(4,'{{{')}${cA(3,c.toLocaleString())}${cA(4,'}}}')}${b}`
   } else if (x < 3199950){
     a = ((1.01 ** ((x - 2158608) / 1500)) ** 2)
     b = Math.floor(a)
     c = 10 ** (a-b)
     d = Math.floor(c)
     e = (10 ** ((c - d) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
-    return `{10,${e},${d},<span style="color: #53D76B">${b.toLocaleString()}</span>}`
+    if (a < 6) return '10' + cA(4,'{'.repeat(b) + cA(3,d) + '}'.repeat(b)) + e
+    return `{${cA(1,10)},${cA(2,Math.floor(e))},${cA(3,d)},${cA(4,b.toLocaleString())}}`
   } else {
-    return '{10,10,10,<span style="color: #53D76B">1,000,000</span>}'
+    return `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,'1,000,000')}}`
   }
 }
 setInterval(update, 10)
@@ -167,10 +186,24 @@ function format(num) {
     else {
       exponent = Math.floor(Math.log10(num))
       mantissa = num / (10 ** exponent)
-      return mantissa.toFixed(2) + 'e' + exponent
+      return mantissa.toFixed(3) + 'e' + exponent
     }
   }
   else if (Math.sign(num) == -1) return '-' + Infinity_symbol
   else return '+' + Infinity_symbol
 }
 console.log('总计时间：' + formatTime(totalTime))
+
+function cA(i,num) {
+  function a(color) {return colorText(color, num)}
+  var x
+  switch (i) {
+    case 1: return a('red')
+    case 2: return a('#B0503E')
+    case 3: return a('#A45CC1')
+    case 4: return a('#53D76B')
+  }
+}
+function colorText(color, text) {
+  return "<span" + " style='color:" + color + "'>" + text + "</span>"
+}
