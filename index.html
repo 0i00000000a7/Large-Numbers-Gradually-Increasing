@@ -5,20 +5,13 @@
     <meta name="viewport" content="width=device-width">
     <title>数字逐渐增长</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="scripts.js"></script>
+    <script src="scripts.js" defer></script>
   </head>
-  <body align="center" onload="load()">
-    <div id="app">
-    <p v-html="timeToNumber(time)"></p>
-    <div class="countdown" id="countdown"
-    >{{getCountdownText()}}</div>
-    <div class="milestones" id="milestones" v-html="getMilestoneText()"></div>
-    <div class="popup" v-if="isShowingMilestone">
-      <div v-html="getMilestonePopup()"></div>
-      <button class="btn" align="center" @click="isShowingMilestone = false">关闭</button>
-    </div>
-    <button class="open_popup" align="center" @click="isShowingMilestone = true">查看里程碑</button>
-    </div>
+  <body align="center">
+    <p id="number"></p>
+    <div class="countdown" id="countdown"></div>
+    <div class="milestones" id="milestones"></div>
+    <div class="popup" style="display: none" id="popup"></div>
+    <button class="open_popup" align="center" onclick="isShowingMilestone = true">查看里程碑</button>
   </body>
 </html>

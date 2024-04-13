@@ -1,60 +1,37 @@
 time = localStorage.getItem('LNGI') !== undefined ? Number(localStorage.getItem('LNGI')) : 0;
+test = 0
 endScreenShowed = false
+isShowingMilestone = false
 milestones = [0, 8525, 13166, 16627, 22450, 33938, 52391, 80131, 89348, 130069, 133649, 185817, 229228, 233834, 288198, 1033200, 1857554, 2.2631e6, 3199950]
 milestoneDisplays = ['0', '10,000,000,000', '10<sup>100</sup>', '10<sup>1,000,000</sup>', '10<sup>10<sup>100</sup></sup>', '10<sup>10<sup>10<sup>10,000,000,000</sup></sup></sup>', '10^^10', '10^^10^^10^^10', '10^^^1,000,000', '10^^^^5', '10{10}10', '10{1,000,000}10', '10{10{10{10{10}10}10}10}10', '10{{1}}1,000', '10{{2}}5', '10{{3}}6', '10{{1,000,000}}10', '10{{{10}}}10', '{10,10,10,1.000e6}']
+
 Infinity_symbol = '<div class="rotate-90">8</div>'
 totalTime = 3199950
-changeCountdownTextAnimationShowed = false
 
 function update() {
-  if(time >= 288198) time += ((Math.log10(time + 1) + 1) * 4)
+  if (time >= 288198) time += ((Math.log10(time+1)+1)*4)
   else time++
-  if(time >= 3199950) time = 3199950
-  if(time >= Number.MAX_VALUE) time = Number.MAX_VALUE
+  if (time >= 3199950) time = 3199950
+  if (time >= Number.MAX_VALUE) time = Number.MAX_VALUE
   localStorage.setItem('LNGI', time)
-}
-setInterval(update, 10)
-
-function getCountdownText() {
-  if(this.changeCountdownTextAnimationShowed) {
-    return "已达结局：" + formatTime(time)
+  document.getElementById("number").innerHTML = timeToNumber(time)
+  document.getElementById("milestones").innerHTML = getMilestoneText()
+  document.getElementById("popup").innerHTML = getMilestonePopup()
+  document.getElementById("popup").style.display = (isShowingMilestone) ? 'block' : 'none'
+  if (time < totalTime) {
+    document.getElementById("countdown").innerHTML = "模拟已运行" + formatTime(time)
   }
-  return "模拟已运行" + formatTime(time)
-}
-
-function formatTime(t) {
-  const totalSeconds = Math.floor(t / 100); // 总秒数  
-  const days = Math.floor(totalSeconds / (24 * 60 * 60)); // 天数  
-  const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60)); // 小时数  
-  const minutes = Math.floor((totalSeconds % (60 * 60)) / 60); // 分钟数  
-  const seconds = (totalSeconds % 60).toFixed(0); // 秒数，保留两位小数  
-  let formattedTime = "";
-  if(days > 0) {
-    formattedTime += days + "天 ";
-  }
-  if(hours > 0) {
-    formattedTime += hours + "小时 ";
-  }
-  if(minutes > 0) { // 如果已经有天数或小时数，或者分钟数大于0，则显示分钟  
-    formattedTime += minutes + "分钟 ";
-  }
-  formattedTime += seconds + "秒";
-  return formattedTime;
-}
-
-function getMilestoneText() {
-  // 找到大于time的最小里程碑索引  
-  var index = milestones.findIndex(function(milestone) {
-    return milestone > this.time;
-  });
-  // 如果没有找到大于time的里程碑（即index为-1）  
-  if(index === -1) {
-    // 返回已达到所有里程碑的信息  
-    return '已达到所有里程碑';
-  } else {
-    // 返回最近的里程碑信息  
-    percent = ' (' + (((this.time - milestones[index - 1]) / (milestones[index] - milestones[index - 1]) * 100).toFixed(2) + '%') + ')'
-    return '最近的里程碑：' + milestoneDisplays[index] + percent;
+  if (time >= totalTime && !endScreenShowed) {
+    document.getElementById("countdown").innerHTML = "模拟已运行"+formatTime(time)
+    endScreenShowed = true
+    document.getElementById("countdown").classList.add('hide');
+    document.getElementById("milestones").classList.add('hide');
+    setTimeout(function() {
+      setInterval(function(){
+        document.getElementById("countdown").innerHTML = "已达结局："+formatTime(time)
+      })
+      document.getElementById("countdown").classList.remove('hide');
+    }, 1500)
   }
 }
 
@@ -130,60 +107,70 @@ function timeToNumber(x) {
     return '{10,10,10,<span style="color: #53D76B">1,000,000</span>}'
   }
 }
+setInterval(update, 10)
 
-function format(num) {
-  if(Number.isFinite(num)) {
-    if(num < 1e3) return num.toFixed(2)
-    else {
-      exponent = Math.floor(Math.log10(num))
-      mantissa = num / (10 ** exponent)
-      return mantissa.toFixed(2) + 'e' + exponent
-    }
-  } else if(Math.sign(num) == -1) return '-' + Infinity_symbol
-  else return '+' + Infinity_symbol
+function formatTime(t) {  
+  const totalSeconds = Math.floor(t / 100); // 总秒数  
+  const days = Math.floor(totalSeconds / (24 * 60 * 60)); // 天数  
+  const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60)); // 小时数  
+  const minutes = Math.floor((totalSeconds % (60 * 60)) / 60); // 分钟数  
+  const seconds = (totalSeconds % 60).toFixed(0); // 秒数，保留两位小数  
+  
+  let formattedTime = "";  
+  
+  if (days > 0) {  
+    formattedTime += days + "天 ";  
+  }  
+  
+  if (hours > 0) {  
+    formattedTime += hours + "小时 ";  
+  }  
+  
+  if (minutes > 0) { // 如果已经有天数或小时数，或者分钟数大于0，则显示分钟  
+    formattedTime += minutes + "分钟 ";  
+  }  
+  
+  formattedTime += seconds + "秒";  
+  
+  return formattedTime;  
+}
+
+function getMilestoneText() {
+  // 找到大于time的最小里程碑索引  
+  var index = milestones.findIndex(function(milestone) {
+    return milestone > time;
+  });
+  // 如果没有找到大于time的里程碑（即index为-1）  
+  if (index === -1) {
+    // 返回已达到所有里程碑的信息  
+    return '已达到所有里程碑';
+  } else {
+    // 返回最近的里程碑信息  
+    percent = ' (' + (((time - milestones[index - 1]) / (milestones[index] - milestones[index - 1]) * 100).toFixed(2) + '%') + ')'
+    return '最近的里程碑：' + milestoneDisplays[index] + percent;
+  }
 }
 
 function getMilestonePopup() {
   mst = ''
   for(var i = 0; i < milestones.length; i++) {
-    var percentage = this.format((time / milestones[i]) * 100);
+    var percentage = format((time / milestones[i]) * 100);
     mst += ('里程碑' + (i + 1) + '：要求：' + milestoneDisplays[i] + ' 已完成' + percentage + '%' + '<br>');
   }
+  mst += `<br><button class='btn' onclick="isShowingMilestone = false">关闭</btn>`
   return mst
 }
-console.log('总计时间：' + formatTime(totalTime))
 
-function load() {
-  var app = new Vue({
-    el: '#app',
-    data: {
-      time: (localStorage.getItem('LNGI') !== undefined ? Number(localStorage.getItem('LNGI')) : 0),
-      isShowingMilestone: false,
-      changeCountdownTextAnimationShowed: false,
-    },
-    methods: {
-      timeToNumber,
-      format,
-      getMilestonePopup,
-      getMilestoneText,
-      getCountdownText,
-      startLoop() {
-        setInterval(() => {
-          this.time = window.time;
-          if(time >= totalTime && !endScreenShowed) {
-            endScreenShowed = true
-            document.getElementById("countdown").classList.add('hide');
-            document.getElementById("milestones").classList.add('hide');
-            setTimeout(() => {
-              this.changeCountdownTextAnimationShowed = true
-              document.getElementById("countdown").classList.remove('hide');
-            }, 1500)
-          }
-        }, 10);
-      }
-    },
-    mounted() {
-      this.startLoop();
-    },
-  })
+function format(num) {
+  if (Number.isFinite(num)) {
+    if (num < 1e3) return num.toFixed(2)
+    else {
+      exponent = Math.floor(Math.log10(num))
+      mantissa = num / (10 ** exponent)
+      return mantissa.toFixed(2) + 'e' + exponent
+    }
+  }
+  else if (Math.sign(num) == -1) return '-' + Infinity_symbol
+  else return '+' + Infinity_symbol
 }
+console.log('总计时间：' + formatTime(totalTime))
