@@ -2,13 +2,14 @@ time = localStorage.getItem('LNGI') !== undefined ? Number(localStorage.getItem(
 test = 0
 endScreenShowed = false
 isShowingMilestone = false
-milestones = [0,8525,13166,16627,22450,33938,52391,80131,89348,130069,133649,185817,229228]
-milestoneDisplays = ['0','10,000,000,000','10<sup>100</sup>','10<sup>1,000,000</sup>','10<sup>10<sup>100</sup></sup>','10<sup>10<sup>10<sup>10,000,000,000</sup></sup></sup>','10^^10','10^^10^^10^^10','10^^^1,000,000','10^^^^5','10{10}10','10{1,000,000}10','10{10{10{10{10}10}10}10}10']
-totalTime = 229228
+milestones = [0,8525,13166,16627,22450,33938,52391,80131,89348,130069,133649,185817,229228,233834,288198]
+milestoneDisplays = ['0','10,000,000,000','10<sup>100</sup>','10<sup>1,000,000</sup>','10<sup>10<sup>100</sup></sup>','10<sup>10<sup>10<sup>10,000,000,000</sup></sup></sup>','10^^10','10^^10^^10^^10','10^^^1,000,000','10^^^^5','10{10}10','10{1,000,000}10','10{10{10{10{10}10}10}10}10','10{{1}}1,000','10{{2}}5']
+Infinity_symbol = '<div class="rotate-90">8</div>'
+totalTime = 288198
 
 function update() {
   time++
-  if (time>=229228) time = 229228
+  if (time>=288198) time = 288198
   localStorage.setItem('LNGI',time)
   document.getElementById("number").innerHTML = timeToNumber(time)
   document.getElementById("milestones").innerHTML = getMilestoneText()
@@ -70,8 +71,12 @@ function timeToNumber(x) {
     return `10{${c.toLocaleString()}}${b}`
   } else if (x < 229228) {
     return '10{' + timeToNumber((x - 183836) ** 1.15) + '}10'
+  } else if (x < 233834) {
+    return "10{{1}}"+Number((1.0015 ** (x - 229228) + 0.00008 * x - 14.34).toFixed(2)).toLocaleString()
+  } else if (x < 288198) {
+    return '10{{1}}' + timeToNumber((x - 232515) ** 1.15)
   } else {
-    return "10{10{10{10{10}10}10}10}10"
+    return '10{{2}}5'
   }
 }
 
@@ -102,7 +107,7 @@ function getMilestonePopup() {
   mst = ''
   for (var i = 0; i < milestones.length; i++) {  
     // 计算完成百分比，确保至少为1%  
-    var percentage = ((time / milestones[i]) * 100).toFixed(2);  
+    var percentage = format((time / milestones[i]) * 100);  
     
     // 显示里程碑和完成百分比  
     mst+=('里程碑' + (i + 1) + '：要求：' + milestoneDisplays[i] + ' 已完成' + percentage + '%' + '<br>');  
@@ -110,3 +115,9 @@ function getMilestonePopup() {
   mst+=`<br><button class='btn' onclick="isShowingMilestone = false">关闭</btn>`
   return mst
 }
+function format(num) {
+  if (Number.isFinite(num)) return num.toFixed(2)
+  else if (Math.sign(num) == -1) return '-<div class="rotate-90">8</div>'
+  else return '+<div class="rotate-90">8</div>'
+}
+console.log('总计时间：' + formatTime(totalTime))

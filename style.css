@@ -126,3 +126,9 @@ body {
   color: white;
   display: inline-block;
 }
+.rotate-90 {  
+  /* 使用 transform 属性来旋转元素 */  
+  transform: rotate(-90deg);    
+  display: inline-block;
+  width: 15px;
+}  
