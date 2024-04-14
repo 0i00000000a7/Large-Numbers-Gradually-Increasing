@@ -2,7 +2,7 @@ time = localStorage.getItem('LNGI') !== undefined ? Number(localStorage.getItem(
 test = 0
 endScreenShowed = false
 isShowingMilestone = false
-milestones = [0, 8525, 13166, 16627, 22450, 33938, 52391, 80131, 89348, 130069, 133649, 185817, 229228, 233834, 288198, 1033200, 1857554, 2.2631e6, 3199950]
+milestones = [0, 8525, 13166, 16627, 22450, 33938, 52391, 80131, 89348, 130069, 133649, 185817, 229228, 233834, 288198, 1033200, 1857554, 2.2631e6, 3199950, 4237676, 4691841, 5096805]
 milestoneDisplays = ['0',
 '10,000,000,000',
 '10<sup>100</sup>',
@@ -11,25 +11,29 @@ milestoneDisplays = ['0',
 '10<sup>10<sup>10<sup>10,000,000,000</sup></sup></sup>',
 `10${cA(3,'^^')}10`,
 `10${cA(3,'^^')}10${cA(3,'^^')}10${cA(3,'^^')}10`,
-`10${cA(3,'^^^')}1,000,000`, `10${cA(3,'^^^^')}5`,
+`10${cA(3,'^^^')}1,000,000`,
+`10${cA(3,'^^^^')}5`,
 `10${cA(4,'{')}${cA(3,'10')}${cA(4,'}')}10`,
 `10${cA(4,'{')}${cA(3,'1,000,000')}${cA(4,'}')}10`,
-`10${cA(4,'{')}10${cA(4,'{')}10${cA(4,'{')}10${cA(4,'{')}${cA(3,'10')}${cA(4,'}')}10${cA(4,'}')}10${cA(4,'}')}10${cA(4,'}')}`,
+`10${cA(4,'{')}10${cA(4,'{')}10${cA(4,'{')}10${cA(4,'{')}${cA(3,'10')}${cA(4,'}')}10${cA(4,'}')}10${cA(4,'}')}10${cA(4,'}')}10`,
 `10${cA(4,'{{')}${cA(3,1)}${cA(4,'}}')}1,000`,
 `10${cA(4,'{{')}${cA(3,2)}${cA(4,'}}')}5`,
 `10${cA(4,'{{')}${cA(3,3)}${cA(4,'}}')}6`,
 `10${cA(4,'{{')}${cA(3,1000000)}${cA(4,'}}')}10`,
 `10${cA(4,'{{{')}${cA(3,'1,000,000')}${cA(4,'}}}')}10`,
-`{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,'1,000,000')}}`
+`{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,'1,000,000')}}`,
+`{${cA(1,10)},${cA(2,10)},${cA(3,1)},${cA(4,1)},${cA(5,2)}}`,
+`{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)}}`,
+`{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)},${cA(6,10)}}`,
 ]
 
 Infinity_symbol = '<div class="rotate-90">8</div>'
-totalTime = 3199950
+totalTime = 5096805
 
 function update() {
   if (time >= 288198) time += ((Math.log10(time+1)+1)*4)
   else time++
-  if (time >= 3199950) time = 3199950
+  if (time >= 5096805) time = 5096805
   if (time >= Number.MAX_VALUE) time = Number.MAX_VALUE
   localStorage.setItem('LNGI', time)
   document.getElementById("number").innerHTML = timeToNumber(time)
@@ -122,8 +126,27 @@ function timeToNumber(x) {
     e = (10 ** ((c - d) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
     if (a < 6) return '10' + cA(4,'{'.repeat(b) + cA(3,d) + '}'.repeat(b)) + e
     return `{${cA(1,10)},${cA(2,Math.floor(e))},${cA(3,d)},${cA(4,b.toLocaleString())}}`
+  } else if (x < 4237676) {
+    return `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${timeToNumber((x - 3197150) ** 1.1)}}`
+  } else if (x < 4289000) {
+    a = Math.floor((x - 4237676) / 10000 + 5)
+    return `{${cA(1,10)},${cA(2,a)},${cA(3,1)},${cA(4,1)},${cA(5,2)}}`
+  } else if (x < 4691841) {
+    e = ((1.01 ** ((x - 4289000) / 3500)) ** 2)+1.12
+    d = Math.floor(e)
+    c = 10 ** (e - d)
+    b = 10 ** (c - Math.floor(c))
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,d)}}`
+  } else if (x < 5096805) {
+    e = ((1.01 ** ((x - 4691841) / 3500)) ** 2) + 1
+    d = 10 ** (e - Math.floor(e))
+    c = 10 ** (d - Math.floor(d))
+    b = 10 ** (c - Math.floor(c))
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,Math.floor(d))},${cA(6,Math.floor(e))}}`
   } else {
-    return `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,'1,000,000')}}`
+    return `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)},${cA(6,10)}}`
   }
 }
 setInterval(update, 10)
@@ -182,7 +205,7 @@ function getMilestonePopup() {
 
 function format(num) {
   if (Number.isFinite(num)) {
-    if (num < 1e3) return num.toFixed(2)
+    if (num < 1e3 && num > 0.1) return num.toFixed(2)
     else {
       exponent = Math.floor(Math.log10(num))
       mantissa = num / (10 ** exponent)
@@ -202,6 +225,8 @@ function cA(i,num) {
     case 2: return a('#B0503E')
     case 3: return a('#A45CC1')
     case 4: return a('#53D76B')
+    case 5: return a('#F1BAED')
+    case 6: return a('#D5736F')
   }
 }
 function colorText(color, text) {

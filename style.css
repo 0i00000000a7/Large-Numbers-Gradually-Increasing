@@ -1,7 +1,7 @@
 @font-face {
 	font-family: 'Bahnschrift';
 	src: url('bahnschrift.ttf');
-	size-adjust: 110%;
+	size-adjust: 100%;
 }
 
 
@@ -84,7 +84,8 @@ body {
 	background-color: #171717;
 	padding: 7px 25px;
 	pointer-events: auto;
-	max-width: 75%; max-height: 75%;
+	max-width: 75%;
+	max-height: 75%;
 	overflow: auto;
 	font-size: 16px;
 }
@@ -127,8 +128,7 @@ body {
   color: white;
   display: inline-block;
 }
-.rotate-90 {  
-  /* 使用 transform 属性来旋转元素 */  
+.rotate-90 {
   transform: rotate(-90deg);    
   display: inline-block;
   width: 15px;
