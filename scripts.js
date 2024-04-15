@@ -1,9 +1,9 @@
 time = localStorage.getItem('LNGI') !== undefined ? Number(localStorage.getItem('LNGI')) : 0;
-test = 0
+speed = 1
 endScreenShowed = false
 isShowingMilestone = false
 isShowingAbout = false
-milestones = [0, 8525, 13166, 16627, 22450, 33938, 52391, 80131, 89348, 130069, 133649, 185817, 229228, 233834, 288198, 1033200, 1857554, 2.2631e6, 3199950, 4237676, 4691841, 5096805, 6196072, 10361412]
+milestones = [0, 8525, 13166, 16627, 22450, 33938, 52391, 80131, 89348, 130069, 133649, 185817, 229228, 233834, 288198, 1033200, 1857554, 2.2631e6, 3199950, 4237676, 4691841, 5096805, 6196072, 10361412, 31990000, 47110000, 55948000, 90660000]
 milestoneDisplays = ['0',
 '10,000,000,000',
 '10<sup>100</sup>',
@@ -27,16 +27,25 @@ milestoneDisplays = ['0',
 `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)}}`,
 `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)},${cA(6,10)}}`,
 `{${cA(1,10)},${cA(2,Math.floor(10).toLocaleString())}[${cA(11,2)}]${cA(1,2)}}`,
-`{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,2)}]${cA(1,2)}}`
+`{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,2)}]${cA(1,2)}}`,
+`{${cA(1,10)},${cA(2,2)},${cA(3,3)}[${cA(11,2)}]${cA(1,2)}}`,
+`{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)}[${cA(11,2)}]${cA(1,2)}}`,
+`{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)}[${cA(11,2)}]${cA(1,2)}}`,
+  `{${cA(1,10)},${cA(2,'1,000,000')}[${cA(11,2)}]${cA(1,3)}}`,
 ]
 
 Infinity_symbol = '<div class="rotate-90">8</div>'
-totalTime = 10361412
+totalTime = 90660000
 
 function update() {
-  if (time >= 288198) time += ((Math.log10(time+1)+1)*4)
-  else time++
-  if (time >= 10361412) time = 10361412
+  speed = 1
+  if (time > 288198) speed *= ((Math.log10(time+1)+1)*4)
+  if (time > 10361412) speed *= 16
+  
+  
+  
+  time += speed
+  if (time >= 90660000) time = 90660000
   if (time >= Number.MAX_VALUE) time = Number.MAX_VALUE
   localStorage.setItem('LNGI', time)
   document.getElementById("number").innerHTML = timeToNumber(time)
@@ -61,7 +70,7 @@ function update() {
   }
 }
 
-function timeToNumber(x) {
+function timeToNumber(x,showNext = true) {
   //0 < x < 1e15
   if(x < 10888) {
     return Math.floor((1.001 + x / 5e6) ** x + 0.01 * x - 1).toLocaleString()
@@ -189,11 +198,34 @@ function timeToNumber(x) {
     return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,Math.floor(d))},${cA(6,Math.floor(e))},${cA(7,Math.floor(f))},${cA(8,Math.floor(g))},${cA(9,Math.floor(h))},${cA(10,Math.floor(i))}}`
   } else if (x < 10361412) {
     a = ((1.01 ** ((x - 6196072) / 6000)) ** 2) + 9
-    b = `{${cA(1,10)},${cA(2,Math.floor(a).toLocaleString())}[${cA(11,10)}]${cA(1,2)}}`
-    b += (a < 100)? `(${((a - Math.floor(a)) * 100).toFixed(2)}% to next)` : ''
+    b = `{${cA(1,10)},${cA(2,Math.floor(a).toLocaleString())}[${cA(11,2)}]${cA(1,2)}}`
+    if (showNext) b += (a < 100)? `(${((a - Math.floor(a)) * 100).toFixed(2)}% to next)` : ''
+    return b
+  } else if (x < 31990000) {
+    a = timeToNumber(((x - 10361412) * 1.45) + 6184,false)
+    return `{${cA(1,10)},${a}[${cA(11,2)}]${cA(1,2)}}`
+  } else if (x < 38270000) {
+    b = ((1.01 ** ((x - 31990000) / 6e4)) ** 2) + 2
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2)))
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))}[${cA(11,2)}]${cA(1,2)}}`
+  } else if (x < 47110000) {
+    c = ((1.01 ** ((x - 38270000) / 8e4)) ** 2) + 1
+    b = 10 ** (c - Math.floor(c))
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2)))
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))}[${cA(11,2)}]${cA(1,2)}}`
+  } else if (x < 55948000){
+    d = ((1.01 ** ((x - 47110000) / 8e4)) ** 2) + 1
+    c = 10 ** (d - Math.floor(d))
+    b = 10 ** (c - Math.floor(c))
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2)))
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,Math.floor(d))}[${cA(11,2)}]${cA(1,2)}}`
+  } else if (x < 90660000) {
+    a = ((1.01 ** ((x - 55948000) / 5e4)) ** 2) + 4
+    b = `{${cA(1,10)},${cA(2,Math.floor(a).toLocaleString())}[${cA(11,2)}]${cA(1,3)}}`
+    if (showNext) b += (a < 100)? `(${format((a - Math.floor(a)) * 100)}% to next)` : ''
     return b
   } else {
-    return `{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,2)}]${cA(1,2)}}`
+    return `{${cA(1,10)},${cA(2,'1,000,000')}[${cA(11,2)}]${cA(1,3)}}`
   }
 }
 setInterval(update, 10)
@@ -251,6 +283,7 @@ function getMilestonePopup() {
 }
 
 function format(num) {
+  if (num == 0) return '0.00'
   if (Number.isFinite(num)) {
     if (num < 1e3 && num > 0.1) return num.toFixed(2)
     else {
