@@ -26,8 +26,8 @@ milestoneDisplays = ['0',
 `{${cA(1,10)},${cA(2,10)},${cA(3,1)},${cA(4,1)},${cA(5,2)}}`,
 `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)}}`,
 `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)},${cA(6,10)}}`,
-`{${cA(1,10)},${cA(2,Math.floor(10).toLocaleString())}[${cA(11,10)}]${cA(1,2)}}`,
-`{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,10)}]${cA(1,2)}}`
+`{${cA(1,10)},${cA(2,Math.floor(10).toLocaleString())}[${cA(11,2)}]${cA(1,2)}}`,
+`{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,2)}]${cA(1,2)}}`
 ]
 
 Infinity_symbol = '<div class="rotate-90">8</div>'
@@ -193,7 +193,7 @@ function timeToNumber(x) {
     b += (a < 100)? `(${((a - Math.floor(a)) * 100).toFixed(2)}% to next)` : ''
     return b
   } else {
-    return `{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,10)}]${cA(1,2)}}`
+    return `{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,2)}]${cA(1,2)}}`
   }
 }
 setInterval(update, 10)
