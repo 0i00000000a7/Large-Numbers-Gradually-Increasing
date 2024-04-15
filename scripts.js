@@ -2,7 +2,8 @@ time = localStorage.getItem('LNGI') !== undefined ? Number(localStorage.getItem(
 test = 0
 endScreenShowed = false
 isShowingMilestone = false
-milestones = [0, 8525, 13166, 16627, 22450, 33938, 52391, 80131, 89348, 130069, 133649, 185817, 229228, 233834, 288198, 1033200, 1857554, 2.2631e6, 3199950, 4237676, 4691841, 5096805]
+isShowingAbout = false
+milestones = [0, 8525, 13166, 16627, 22450, 33938, 52391, 80131, 89348, 130069, 133649, 185817, 229228, 233834, 288198, 1033200, 1857554, 2.2631e6, 3199950, 4237676, 4691841, 5096805, 6196072, 10361412]
 milestoneDisplays = ['0',
 '10,000,000,000',
 '10<sup>100</sup>',
@@ -25,21 +26,24 @@ milestoneDisplays = ['0',
 `{${cA(1,10)},${cA(2,10)},${cA(3,1)},${cA(4,1)},${cA(5,2)}}`,
 `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)}}`,
 `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)},${cA(6,10)}}`,
+`{${cA(1,10)},${cA(2,Math.floor(10).toLocaleString())}[${cA(11,10)}]${cA(1,2)}}`,
+`{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,10)}]${cA(1,2)}}`
 ]
 
 Infinity_symbol = '<div class="rotate-90">8</div>'
-totalTime = 5096805
+totalTime = 10361412
 
 function update() {
   if (time >= 288198) time += ((Math.log10(time+1)+1)*4)
   else time++
-  if (time >= 5096805) time = 5096805
+  if (time >= 10361412) time = 10361412
   if (time >= Number.MAX_VALUE) time = Number.MAX_VALUE
   localStorage.setItem('LNGI', time)
   document.getElementById("number").innerHTML = timeToNumber(time)
   document.getElementById("milestones").innerHTML = getMilestoneText()
   document.getElementById("popup").innerHTML = getMilestonePopup()
   document.getElementById("popup").style.display = (isShowingMilestone) ? 'block' : 'none'
+  document.getElementById("about").style.display = (isShowingAbout) ? 'block' : 'none'
   if (time < totalTime) {
     document.getElementById("countdown").innerHTML = "模拟已运行" + formatTime(time)
   }
@@ -145,8 +149,51 @@ function timeToNumber(x) {
     b = 10 ** (c - Math.floor(c))
     a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
     return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,Math.floor(d))},${cA(6,Math.floor(e))}}`
+  } else if (x < 5559700) {
+    f = ((1.01 ** ((x - 5096805) / 4000)) ** 2) + 1
+    e = 10 ** (f - Math.floor(f))
+    d = 10 ** (e - Math.floor(e))
+    c = 10 ** (d - Math.floor(d))
+    b = 10 ** (c - Math.floor(c))
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,Math.floor(d))},${cA(6,Math.floor(e))},${cA(7,Math.floor(f))}}`
+  } else if (x < 5848960) {
+    g = ((1.01 ** ((x - 5559700) / 2500)) ** 2) + 1
+    f = 10 ** (g - Math.floor(g))
+    e = 10 ** (f - Math.floor(f))
+    d = 10 ** (e - Math.floor(e))
+    c = 10 ** (d - Math.floor(d))
+    b = 10 ** (c - Math.floor(c))
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,Math.floor(d))},${cA(6,Math.floor(e))},${cA(7,Math.floor(f))},${cA(8,Math.floor(g))}}`
+  } else if (x < 6022516) {
+    h = ((1.01 ** ((x - 5848960) / 1500)) ** 2) + 1
+    g = 10 ** (h - Math.floor(h))
+    f = 10 ** (g - Math.floor(g))
+    e = 10 ** (f - Math.floor(f))
+    d = 10 ** (e - Math.floor(e))
+    c = 10 ** (d - Math.floor(d))
+    b = 10 ** (c - Math.floor(c))
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,Math.floor(d))},${cA(6,Math.floor(e))},${cA(7,Math.floor(f))},${cA(8,Math.floor(g))},${cA(9,Math.floor(h))}}`
+  } else if (x < 6196072) {
+    i = ((1.01 ** ((x - 6022516) / 1500)) ** 2) + 1
+    h = 10 ** (i - Math.floor(i))
+    g = 10 ** (h - Math.floor(h))
+    f = 10 ** (g - Math.floor(g))
+    e = 10 ** (f - Math.floor(f))
+    d = 10 ** (e - Math.floor(e))
+    c = 10 ** (d - Math.floor(d))
+    b = 10 ** (c - Math.floor(c))
+    a = (10 ** ((b - Math.floor(b)) * (1 - Math.log10(2)) + Math.log10(2))).toFixed(2)
+    return `{${cA(1,10)},${cA(2,Math.floor(a))},${cA(3,Math.floor(b))},${cA(4,Math.floor(c))},${cA(5,Math.floor(d))},${cA(6,Math.floor(e))},${cA(7,Math.floor(f))},${cA(8,Math.floor(g))},${cA(9,Math.floor(h))},${cA(10,Math.floor(i))}}`
+  } else if (x < 10361412) {
+    a = ((1.01 ** ((x - 6196072) / 6000)) ** 2) + 9
+    b = `{${cA(1,10)},${cA(2,Math.floor(a).toLocaleString())}[${cA(11,10)}]${cA(1,2)}}`
+    b += (a < 100)? `(${((a - Math.floor(a)) * 100).toFixed(2)}% to next)` : ''
+    return b
   } else {
-    return `{${cA(1,10)},${cA(2,10)},${cA(3,10)},${cA(4,10)},${cA(5,10)},${cA(6,10)}}`
+    return `{${cA(1,10)},${cA(2,Math.floor(1e6).toLocaleString())}[${cA(11,10)}]${cA(1,2)}}`
   }
 }
 setInterval(update, 10)
@@ -227,8 +274,38 @@ function cA(i,num) {
     case 4: return a('#53D76B')
     case 5: return a('#F1BAED')
     case 6: return a('#D5736F')
+    case 7: return a('#758C94')
+    case 8: return a('#8937EF')
+    case 9: return a('#D6F28C')
+    case 10: return a('#17E1E1')
+    case 11: return a('#F4B446')
   }
 }
 function colorText(color, text) {
   return "<span" + " style='color:" + color + "'>" + text + "</span>"
+}
+function exporty() {
+  save = LZString.compressToBase64(String(time))
+  navigator.clipboard.writeText(save)
+}
+function importy() {
+  your_save = prompt('请输入存档')
+  if (Number.isNaN(Number(LZString.decompressFromBase64(your_save)))) return
+  time = Number(LZString.decompressFromBase64(your_save))
+}
+function hard_reset() {
+  prompt_text = `您确定要硬重置吗？输入1进行第一次确认，此操作无法取消!`
+  let promption = prompt(prompt_text);
+  if(promption === "1") {
+    prompt_text = `您确定要硬重置吗？输入2进行第二次确认，此操作无法取消!`
+    let promption = prompt(prompt_text);
+    if(promption === "2") {
+      prompt_text = `您确定要硬重置吗？输入3进行最后一次确认，此操作无法取消!`
+      let promption = prompt(prompt_text);
+      if(promption === "3") {
+        time = 0
+        endScreenShowed = false
+      }
+    }
+  }
 }

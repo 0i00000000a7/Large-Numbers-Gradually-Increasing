@@ -102,21 +102,17 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.open_popup {  
-  position: fixed;  
-  bottom: 160px;  
-  left: 50%; /* 将左边缘置于窗口中心 */  
-  transform: translateX(-50%); /* 向左移动自身宽度的50%，实现居中 */  
-  cursor: pointer;  
-  font-size: 12px;  
-  max-width: 250px;  
-  padding: 7px 25px;  
-  text-decoration: none;  
-  border: 1px solid #777;  
-  background: #333;  
-  color: white;  
+
+
+.btn_container {
+  position: fixed;
+  bottom: 160px;
+  left: 50%;
+  transform: translateX(-50%);
 }
+
 .btn {
+  position: relative;
   cursor: pointer;
   font-size: 12px;
   max-width: 250px;
@@ -133,3 +129,7 @@ body {
   display: inline-block;
   width: 15px;
 }  
+
+a {
+  color: #def;
+}
